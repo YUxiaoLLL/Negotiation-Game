@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Your Role</title>
+    <style>
+        body { font-family: sans-serif; margin: 2em; }
+        .role-card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 1em;
+            margin-bottom: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .role-card:hover {
+             background-color: #f0f0f0;
+        }
+        .role-card.selected {
+            background-color: #e0e0ff;
+            border-color: #a0a0ff;
+        }
+        h2 { margin-top: 0; }
+        button { padding: 0.5em 1em; font-size: 1em; margin-top: 1em; }
+        label { display: block; margin-bottom: 1.5em; }
+        input[type="radio"] { display: none; } /* Hide radio button */
+
+    </style>
+</head>
+<body>
+    <h1>Choose Your Negotiation Role</h1>
+    <p>Select a role to determine your stance, perspective, and objectives in the upcoming negotiation.</p>
+
+    <form method="POST" id="role-form">
+        {% for role_id, role_info in roles.items() %}
+        <label for="{{ role_id }}" class="role-card" id="card-{{ role_id }}">
+             <input type="radio" name="role" value="{{ role_id }}" id="{{ role_id }}" required onchange="selectRole('{{ role_id }}')">
+            <h2>{{ role_info.name }}</h2>
+            <p><strong>Description:</strong> {{ role_info.description }}</p>
+            <p><strong>Objective:</strong> {{ role_info.objective }}</p>
+            <p><strong>Influence:</strong> {{ role_info.influence }}</p>
+         </label>
+        {% endfor %}
+        <button type="submit">Confirm Role and Customize</button>
+    </form>
+
+    <script>
+        function selectRole(selectedRoleId) {
+            // Remove 'selected' class from all cards
+            document.querySelectorAll('.role-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            // Add 'selected' class to the clicked card
+            document.getElementById('card-' + selectedRoleId).classList.add('selected');
+        }
+    </script>
+
+</body>
+</html>

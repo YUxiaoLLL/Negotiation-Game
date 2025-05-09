@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customize Your Character</title>
+    <style>
+        body { font-family: sans-serif; margin: 2em; }
+        .form-group { margin-bottom: 1em; }
+        label {
+            display: block;
+            margin-bottom: 0.3em;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 95%;
+            padding: 0.5em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            max-width: 400px; /* Limit width */
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        button { padding: 0.7em 1.5em; font-size: 1em; margin-top: 1em; cursor: pointer; }
+        .radio-group label { display: inline-block; margin-right: 1em; font-weight: normal; }
+        .radio-group input[type="radio"] { margin-right: 0.3em; }
+        #children-number-group { display: none; margin-top: 0.5em; } /* Initially hidden */
+    </style>
+</head>
+<body>
+    <h1>Customize Your {{ player_role_name }} Character</h1>
+    <p>Fill in the details for your character.</p>
+
+    <form method="POST">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" min="1" required>
+        </div>
+
+        <div class="form-group radio-group">
+            <label>Gender:</label>
+            <label><input type="radio" name="gender" value="Male" required> Male</label>
+            <label><input type="radio" name="gender" value="Female"> Female</label>
+            <label><input type="radio" name="gender" value="Other"> Other</label>
+        </div>
+
+        <div class="form-group radio-group">
+            <label>Local Born:</label>
+            <label><input type="radio" name="local_born" value="Yes" required> Yes</label>
+            <label><input type="radio" name="local_born" value="No"> No</label>
+        </div>
+
+        <div class="form-group radio-group">
+            <label>Has Children:</label>
+            <label><input type="radio" name="has_children" value="Yes" required onchange="toggleChildrenNumber(true)"> Yes</label>
+            <label><input type="radio" name="has_children" value="No" onchange="toggleChildrenNumber(false)"> No</label>
+        </div>
+
+        <div class="form-group" id="children-number-group">
+            <label for="num_children">Number of Children:</label>
+            <input type="number" id="num_children" name="num_children" min="1">
+        </div>
+
+        <div class="form-group radio-group">
+            <label>Marital Status:</label>
+            <label><input type="radio" name="marital_status" value="Single" required> Single</label>
+            <label><input type="radio" name="marital_status" value="Married"> Married</label>
+            <label><input type="radio" name="marital_status" value="Other"> Other</label>
+        </div>
+
+        <div class="form-group">
+            <label for="backstory">Backstory:</label>
+            <textarea id="backstory" name="backstory" required></textarea>
+        </div>
+
+        <button type="submit">Confirm Details and View Negotiation Group</button>
+    </form>
+
+    <script>
+        function toggleChildrenNumber(show) {
+            const childrenNumberGroup = document.getElementById('children-number-group');
+            const numChildrenInput = document.getElementById('num_children');
+            if (show) {
+                childrenNumberGroup.style.display = 'block';
+                numChildrenInput.required = true;
+            } else {
+                childrenNumberGroup.style.display = 'none';
+                numChildrenInput.required = false;
+                numChildrenInput.value = ''; // Clear value if hiding
+            }
+        }
+
+        // Initial check in case the page is reloaded with 'Yes' selected
+        const hasChildrenYes = document.querySelector('input[name="has_children"][value="Yes"]');
+        if (hasChildrenYes && hasChildrenYes.checked) {
+            toggleChildrenNumber(true);
+        }
+    </script>
+
+</body>
+</html>

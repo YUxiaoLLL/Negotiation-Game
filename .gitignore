@@ -1,0 +1,35 @@
+# Environment variables
+.env
+*.env.*
+!env.example
+
+# Virtual Environments
+venv/
+.venv/
+env/
+.env
+
+# Python bytecode and cache
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+
+# Flask session files
+.flask_session/
+
+# macOS
+.DS_Store
+
+# IDE specific
+.idea/
+.vscode/
+
+# Build artifacts
+/dist/
+/build/
+*.egg-info/
+
+# Instance folder (if you use one for Flask)
+/instance/
